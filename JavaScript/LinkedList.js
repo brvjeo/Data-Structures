@@ -1,6 +1,6 @@
-const Node = require("./node.js");
+const Node = require("./Node.js");
 
-class Deque{
+class LinkedList{
     #head = null;
     #tail = null;
     #length = 0;
@@ -109,4 +109,4 @@ class Deque{
     }
 }
 
-module.exports = Deque;
+module.exports = LinkedList;

@@ -1,3 +1,5 @@
 # Data-Structures
-## Linear
-- deque
+![data-structures](data-structures.png)
+### JavaScript
+- Linear
+    - LinkedList.js
