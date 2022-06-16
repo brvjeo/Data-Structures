@@ -3,3 +3,7 @@
 ### JavaScript
 - Linear
     - LinkedList.js
+### C++
+- Linear
+    - LinkedList.hpp
+    - Stack.hpp
