@@ -18,15 +18,10 @@ template<typename T> class LinkedList: protected Structure<T> {
 public:
     LinkedList<T>();
     ~LinkedList<T>();
-protected:
     T get(int index) override;
     T pull(int index) override;
     void insert(int index,T value) override;
     int getLength() override;
-    void push(T value);
-    T pop();
-    void unshift(T value);
-    T shift();
 };
 
 template<typename T> LinkedList<T>::LinkedList(){
@@ -42,18 +37,6 @@ template<typename T> LinkedList<T>::~LinkedList(){
     }
     
     delete ptr;
-}
-template<typename T> T LinkedList<T>::pop(){
-    return pull(length-1);
-}
-template<typename T> T LinkedList<T>::shift(){
-    return pull(0);
-}
-template<typename T> void LinkedList<T>::push(T value){
-    insert(length,value);
-}
-template<typename T> void LinkedList<T>::unshift(T value){
-    insert(0,value);
 }
 template<typename T> T LinkedList<T>::get(int index){
     if(!getLength()) throw "List is empty";

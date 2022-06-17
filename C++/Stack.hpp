@@ -2,25 +2,33 @@
 #define Stack_hpp
 
 #include <stdio.h>
-#include "LinkedList.hpp"
 
 using namespace std;
 
 namespace DataStructures {
-template<typename T> class Stack final: protected LinkedList<T>{
+template<typename T,class C> class Stack final {
+    C* structure;
 public:
+    Stack<T,C>();
+    ~Stack<T,C>();
+    int getLength();
     void push(T value);
     T pop();
-    int getLength();
 };
-template<typename T> void Stack<T>::push(T value){
-    LinkedList<T>::push(value);
+template<typename T,class C> Stack<T,C>::Stack(){
+    structure = new C;
 }
-template<typename T> T Stack<T>::pop(){
-    return LinkedList<T>::pop();
+template<typename T,class C> Stack<T,C>::~Stack(){
+    delete structure;
 }
-template<typename T> int Stack<T>::getLength(){
-    return LinkedList<T>::getLength();
+template<typename T,class C> void Stack<T,C>::push(T value){
+    structure->insert(getLength(),value);
+}
+template<typename T,class C> T Stack<T,C>::pop(){
+    return structure->pull(getLength()-1);
+}
+template<typename T,class C> int Stack<T,C>::getLength(){
+    return structure->getLength();
 }
 };
 #endif
