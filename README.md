@@ -1,6 +1,6 @@
 # Data-Structures
 ![data-structures](data-structures.png)
-## C++ Hierarchical Tree
+## Hierarchical Tree
 ```
 Structure<Type>
 ├── LinkedList<Type>
