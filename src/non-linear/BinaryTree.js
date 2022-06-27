@@ -1,4 +1,4 @@
-export class BinaryTree {
+class BinaryTree {
 
     constructor(){
         throw new Error("Static class!");
@@ -7,7 +7,7 @@ export class BinaryTree {
     static inOrderPrint(node){
         if(node){
             this.inOrderPrint(node.left);
-            console.log(node.data);
+            console.log(node.data.key);
             this.inOrderPrint(node.right);
         }
     }
@@ -28,3 +28,5 @@ export class BinaryTree {
         }
     }
 }
+
+module.exports = BinaryTree;

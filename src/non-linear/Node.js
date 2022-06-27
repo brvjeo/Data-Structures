@@ -1,4 +1,4 @@
-export class Node {
+class Node {
     constructor(data){
         if((data == null) || (data == undefined)){
             throw new Error("Undefined data!");
@@ -8,3 +8,5 @@ export class Node {
         this.right = null;
     }
 }
+
+module.exports = Node;
