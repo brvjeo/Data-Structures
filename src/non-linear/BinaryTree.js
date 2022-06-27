@@ -14,17 +14,17 @@ class BinaryTree {
 
     static preOrderPrint(node){
         if(node){
-            console.log(node.data);
-            this.inOrderPrint(node.left);
-            this.inOrderPrint(node.right);
+            console.log(node.data.key);
+            this.preOrderPrint(node.left);
+            this.preOrderPrint(node.right);
         }
     }
 
     static postOrderPrint(node){
         if(node){
-            this.inOrderPrint(node.left);
-            this.inOrderPrint(node.right);
-            console.log(node.data);
+            this.postOrderPrint(node.left);
+            this.postOrderPrint(node.right);
+            console.log(node.data.key);
         }
     }
 }

@@ -19,36 +19,45 @@ class BinarySearchTree {
   }
 
   #removeNode(root, key, parent) {
-    let data;
-    let sideParent;
+    let data, node = null, sideParent = null;
 
     if (key === root.data.key) {
       data = root.data.key;
       if (!root.left && !root.right) {
-        root = null;
-        parent = null;
-      }else if(root.left){
-        parent = root.left;
-        root = null;
-      }else if(root.right){
-        parent = root.right;
-        root = null;
-      }else if(root.right && root.left){
-        let node = root.right;
-        sideParent = root;
-        while(node.left){
-          sideParent = node;
-          node = node.left;
+        if(parent){
+          parent[((parent.left === root ) ? 'left' : 'right')] = null;
         }
-        sideParent.left = null;
-        node.right = root.right;
+      }else if(root.left && root.right){
+        node = root.left;
+        sideParent = root;
+        while(node.right){
+          sideParent = node;
+          node = node.right;
+        }
+        sideParent.right = node.left || null;
+        if(parent){
+          parent[((parent.left === root ) ? 'left' : 'right')] = node;
+        }
         node.left = root.left;
-        root = null;
-        parent = node;
+        node.right = root.right;
+        if(root === this.#root){
+          this.#root = node;
+        }
+      }else if(root.left){
+        if(parent){
+          parent[((parent.left === root ) ? 'left' : 'right')] = root.left;
+        }
+      }else{
+        if(parent){
+          parent[((parent.left === root ) ? 'left' : 'right')] = root.right;
+        }
       }
+      root = null;
       return data;
-    }else if(key < root.data.key){
-      this.#removeNode(root.left,key,root.left)
+    } else if (key < root.data.key) {
+      return this.#removeNode(root.left, key, root);
+    } else if (key > root.data.key) {
+      return this.#removeNode(root.right, key, root);
     }
   }
 
