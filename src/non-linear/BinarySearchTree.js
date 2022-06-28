@@ -19,39 +19,11 @@ class BinarySearchTree {
   }
 
   #removeNode(root, key, parent) {
-    let data, node = null, sideParent = null;
+    let data, node = null;
 
     if (key === root.data.key) {
       data = root.data.key;
-      if (!root.left && !root.right) {
-        if(parent){
-          parent[((parent.left === root ) ? 'left' : 'right')] = null;
-        }
-      }else if(root.left && root.right){
-        node = root.left;
-        sideParent = root;
-        while(node.right){
-          sideParent = node;
-          node = node.right;
-        }
-        sideParent.right = node.left || null;
-        if(parent){
-          parent[((parent.left === root ) ? 'left' : 'right')] = node;
-        }
-        node.left = root.left;
-        node.right = root.right;
-        if(root === this.#root){
-          this.#root = node;
-        }
-      }else if(root.left){
-        if(parent){
-          parent[((parent.left === root ) ? 'left' : 'right')] = root.left;
-        }
-      }else{
-        if(parent){
-          parent[((parent.left === root ) ? 'left' : 'right')] = root.right;
-        }
-      }
+
       root = null;
       return data;
     } else if (key < root.data.key) {
@@ -62,17 +34,20 @@ class BinarySearchTree {
   }
 
   find(key) {
-    return this.#getNode(this.#root, key)?.value;
+    return this.#getNode(this.#root, key, null)?.data.key;
   }
 
-  #getNode(root, key) {
+  #getNode(root, key, parent) {
     if (!root) return;
     if (key === root.data.key) {
-      return root.data;
+      return {
+        data: root.data,
+        parent
+      };
     } else if (key < root.data.key) {
-      return this.#getNode(root.left, key);
+      return this.#getNode(root.left, key, root);
     } else if (key > root.data.key) {
-      return this.#getNode(root.right, key);
+      return this.#getNode(root.right, key, root);
     }
   }
 
@@ -102,6 +77,10 @@ class BinarySearchTree {
 
   postOrderPrint() {
     BinaryTree.postOrderPrint(this.#root);
+  }
+
+  #getParent(node) {
+    return this.#getNode(this.#root, node.data.key, null)?.parent;
   }
 }
 
