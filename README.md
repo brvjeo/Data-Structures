@@ -1,6 +1,6 @@
 # Data-Structures
 
-## Project Structure
+## Project tree
 ```
 .
 └── src
@@ -11,6 +11,7 @@
     │   ├── Queue.js
     │   └── Stack.js
     └── non-linear
+        ├── BinaryHeap.js
         ├── BinarySearchTree.js
         ├── BinaryTree.js
         └── Node.js

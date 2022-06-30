@@ -2,13 +2,13 @@
  * Binary Search Tree
  * Main operations:
  * 
- * - SEARCH
- * - INSERT
- * - REMOVE
- * - GET_SUCCESSOR
- * - GET_PREDECESSOR
- * - MINIMUM
- * - MAXIMUM
+ * - Search
+ * - Insert
+ * - Remove
+ * - Get_Successor
+ * - Get_Predecessor
+ * - Minimum
+ * - Maximum
  */
 
 const Node = require("./Node.js");
@@ -33,7 +33,7 @@ class BinarySearchTree {
   }
 
   remove(key) {
-    return this.#removeNode(this.#root, key);
+    this.#removeNode(this.#root, key);
   }
 
   get minimum() {
