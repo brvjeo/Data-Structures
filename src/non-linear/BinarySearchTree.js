@@ -71,13 +71,13 @@ class BinarySearchTree {
       node.right = this.#removeNode(node.right, node.data.key);
     } else {
       if (node.left) {
-        if (node === this.#root) this.#root = node.left;
+        if (node == this.#root) this.#root = node.left;
         node = node.left;
       } else if (node.right) {
-        if (node === this.#root) this.#root = node.right;
+        if (node == this.#root) this.#root = node.right;
         node = node.right;
       } else {
-        if (node === this.#root) this.#root = null;
+        if (node == this.#root) this.#root = null;
         node = null;
       }
     }
@@ -87,7 +87,7 @@ class BinarySearchTree {
 
   #getNode(root, key) {
     if (!root) return;
-    if (key === root.data.key) {
+    if (key == root.data.key) {
       return root;
     } else if (key < root.data.key) {
       return this.#getNode(root.left, key);

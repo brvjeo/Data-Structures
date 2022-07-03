@@ -7,7 +7,7 @@ class LinkedList {
 
   *[Symbol.iterator]() {
     let node = this.#head;
-    for (let i = 0; i < this.#length; i++) {
+    while (node.next) {
       yield node.data;
       node = node.next;
     }
@@ -46,8 +46,7 @@ class LinkedList {
       return;
     }
 
-    let node = new Node(data),
-      ptr;
+    let node = new Node(data), ptr;
     if (!index) {
       node.next = this.#head;
       this.#head.prev = node;
