@@ -12,10 +12,7 @@ class Graph {
     if (!this.#graph[i]) return false;
 
     [...this.#graph[i]].forEach((vertex) => {
-      this.#graph[vertex.key].remove(i, (x, y) => {
-        if (x.key == y) return 0;
-        return 1;
-      });
+      this.#graph[vertex.key].remove(i, (x,y) => !(x.key == y));
     });
 
     delete this.#graph[i];
@@ -27,11 +24,7 @@ class Graph {
       throw new Error("Weight must be number!");
     if (!this.#graph[i] || !this.#graph[j]) return;
 
-    let vertex = this.#graph[i].find(j, (x, y) => {
-      if (x.key == y) return 0;
-      return 1;
-    });
-
+    let vertex = this.#graph[i].find(j, (x,y) => !(x.key == y));
     if (vertex && weight < vertex.weight) {
       vertex.weight = weight;
       return;
@@ -53,10 +46,7 @@ class Graph {
   }
 
   adjacent(i, j) {
-    return !!this.#graph[i]?.includes(j, (x, y) => {
-      if (x.key == y) return 0;
-      return 1;
-    });
+    return !!this.#graph[i]?.includes(j, (x,y) => !(x.key == y));
   }
 
   contract(i, j) {
