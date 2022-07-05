@@ -1,7 +1,7 @@
 class Vertex {
   constructor(key, weight) {
-    if (key == null || weight == null) {
-      throw new Error("Fields can't be null or undefined");
+    if (key == null) {
+      throw new Error("Undefined data!");
     }
     this.key = key;
     this.weight = weight;
@@ -20,7 +20,7 @@ class Vertex {
   }
 
   toString() {
-    return String(this.key);
+    return `{${this.key} | ${this.weight}}`;
   }
 }
 

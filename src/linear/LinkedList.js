@@ -9,7 +9,7 @@ class LinkedList {
     let node = this.#head;
     while (node) {
       yield node.data;
-      node = node?.next;
+      node = node.next;
     }
   }
 
@@ -33,9 +33,19 @@ class LinkedList {
     return this.#getNode(index)?.data;
   }
 
+  find(data, compare){
+    let node = this.#head;
+    while (node) {
+      if (!compare(node.data, data)) {
+        return node.data;
+      }
+      node = node.next;
+    }
+    return null;
+  }
+
   insert(index, data) {
-    if (index < 0 || index > this.#length)
-      throw new Error("Index is out of bounds!");
+    if (index < 0 || index > this.#length) return;
 
     this.#length++;
     if (!this.#head) {
@@ -63,14 +73,7 @@ class LinkedList {
   }
 
   includes(data, compare) {
-    let node = this.#head;
-    while (node) {
-      if (!compare(node.data, data)) {
-        return true;
-      }
-      node = node?.next;
-    }
-    return false;
+    return !!this.find(data,compare);
   }
 
   remove(data, compare, all = false) {
@@ -81,7 +84,7 @@ class LinkedList {
         this.#length--;
         if (!all) return;
       }
-      node = node?.next;
+      node = node.next;
     }
   }
 
@@ -93,9 +96,9 @@ class LinkedList {
   }
 
   getCopy(){
-    let newList = new LinkedList();
-    newList.concat(this);
-    return newList;
+    let list = new LinkedList();
+    list.concat(this);
+    return list;
   }
 
   #getNode(index) {
