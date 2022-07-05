@@ -7,10 +7,16 @@ class LinkedList {
 
   *[Symbol.iterator]() {
     let node = this.#head;
-    while (node.next) {
+    while (node) {
       yield node.data;
-      node = node.next;
+      node = node?.next;
     }
+  }
+
+  clear(){
+    this.#head = null;
+    this.#tail = null;
+    this.#length = 0;
   }
 
   pull(index) {
@@ -18,40 +24,32 @@ class LinkedList {
     let node = this.#getNode(index);
     let data = node.data;
 
-    if (!node.prev && !node.next) {
-      this.#tail = this.#head = null;
-    } else if (!node.prev) {
-      node.next.prev = null;
-      this.#head = node.next;
-    } else if (!node.next) {
-      node.prev.next = null;
-      this.#tail = node.prev;
-    } else {
-      node.prev.next = node.next;
-      node.next.prev = node.prev;
-    }
-
-    node = null;
+    this.#remove(node);
     this.#length--;
     return data;
+  }
+
+  atPos(index) {
+    return this.#getNode(index)?.data;
   }
 
   insert(index, data) {
     if (index < 0 || index > this.#length)
       throw new Error("Index is out of bounds!");
 
+    this.#length++;
     if (!this.#head) {
       this.#head = this.#tail = new Node(data);
-      this.#length++;
       return;
     }
 
-    let node = new Node(data), ptr;
+    let node = new Node(data),
+      ptr;
     if (!index) {
       node.next = this.#head;
       this.#head.prev = node;
       this.#head = node;
-    } else if (index == this.#length) {
+    } else if (index == this.#length - 1) {
       node.prev = this.#tail;
       this.#tail.next = node;
       this.#tail = node;
@@ -62,11 +60,42 @@ class LinkedList {
       node.prev = ptr.prev;
       ptr.prev = node;
     }
-    this.#length++;
   }
 
-  get(index) {
-    return this.#getNode(index)?.data;
+  includes(data, compare) {
+    let node = this.#head;
+    while (node) {
+      if (!compare(node.data, data)) {
+        return true;
+      }
+      node = node?.next;
+    }
+    return false;
+  }
+
+  remove(data, compare, all = false) {
+    let node = this.#head;
+    while (node) {
+      if (!compare(node.data, data)) {
+        this.#remove(node);
+        this.#length--;
+        if (!all) return;
+      }
+      node = node?.next;
+    }
+  }
+
+  concat(list){
+    let data, k = 0;
+    while(data = list.atPos(k++)){
+      this.insert(this.#length, data);
+    }
+  }
+
+  getCopy(){
+    let newList = new LinkedList();
+    newList.concat(this);
+    return newList;
   }
 
   #getNode(index) {
@@ -85,6 +114,21 @@ class LinkedList {
       }
     }
     return ptr;
+  }
+
+  #remove(node) {
+    if (!node.prev && !node.next) {
+      this.#tail = this.#head = null;
+    } else if (!node.prev) {
+      node.next.prev = null;
+      this.#head = node.next;
+    } else if (!node.next) {
+      node.prev.next = null;
+      this.#tail = node.prev;
+    } else {
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
+    }
   }
 
   get length() {
