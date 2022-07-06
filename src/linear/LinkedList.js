@@ -13,7 +13,7 @@ class LinkedList {
     }
   }
 
-  clear(){
+  clear() {
     this.#head = null;
     this.#tail = null;
     this.#length = 0;
@@ -24,16 +24,16 @@ class LinkedList {
     let node = this.#getNode(index);
     let data = node.data;
 
-    this.#remove(node);
+    this.#pullOut(node);
     this.#length--;
     return data;
   }
 
-  atPos(index) {
+  get(index) {
     return this.#getNode(index)?.data;
   }
 
-  find(data, compare){
+  find(data, compare = defaultCompare) {
     let node = this.#head;
     while (node) {
       if (!compare(node.data, data)) {
@@ -45,21 +45,21 @@ class LinkedList {
   }
 
   insert(index, data) {
-    if (index < 0 || index > this.#length) return;
+    if (index < 0 || index > this.#length || (typeof index != typeof 1)) return;
 
     this.#length++;
+    let node = new Node(data);
     if (!this.#head) {
-      this.#head = this.#tail = new Node(data);
+      this.#head = this.#tail = node;
       return;
     }
 
-    let node = new Node(data),
-      ptr;
+    let ptr;
     if (!index) {
       node.next = this.#head;
       this.#head.prev = node;
       this.#head = node;
-    } else if (index == this.#length - 1) {
+    } else if (index === this.#length - 1) {
       node.prev = this.#tail;
       this.#tail.next = node;
       this.#tail = node;
@@ -73,14 +73,15 @@ class LinkedList {
   }
 
   includes(data, compare) {
-    return !!this.find(data,compare);
+    if(this.find(data, compare) != null) return true;
+    return false;
   }
 
-  remove(data, compare, all = false) {
+  remove(data, compare = defaultCompare, all = false) {
     let node = this.#head;
     while (node) {
       if (!compare(node.data, data)) {
-        this.#remove(node);
+        this.#pullOut(node);
         this.#length--;
         if (!all) return;
       }
@@ -88,14 +89,14 @@ class LinkedList {
     }
   }
 
-  concat(list){
+  concat(list) {
     let data, k = 0;
-    while(data = list.atPos(k++)){
+    while (data = list.get(k++)) {
       this.insert(this.#length, data);
     }
   }
 
-  getCopy(){
+  getCopy() {
     let list = new LinkedList();
     list.concat(this);
     return list;
@@ -119,7 +120,7 @@ class LinkedList {
     return ptr;
   }
 
-  #remove(node) {
+  #pullOut(node) {
     if (!node.prev && !node.next) {
       this.#tail = this.#head = null;
     } else if (!node.prev) {
@@ -140,3 +141,13 @@ class LinkedList {
 }
 
 module.exports = LinkedList;
+
+function defaultCompare(x, y) {
+  if (x == y) {
+    return 0;
+  } else if (x < y) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
