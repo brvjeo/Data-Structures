@@ -8,10 +8,10 @@ class Vertex {
   }
 
   [Symbol.toPrimitive](hint) {
-    if (hint == "number") {
-      return this.valueOf();
-    } else {
+    if (hint == "default" || hint == "string") {
       return this.toString();
+    } else {
+      return this.valueOf();
     }
   }
 

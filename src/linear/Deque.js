@@ -25,7 +25,19 @@ class Deque {
     return this.#list.pull(0);
   }
 
+  getFirst(){
+    if(!this.length) return;
+    return this.#list.atPos(0);
+  }
+
+  getLast(){
+    if(!this.length) return;
+    return this.#list.atPos(this.length - 1);
+  }
+
   get length() {
     return this.#list.length;
   }
 }
+
+module.exports = Deque;

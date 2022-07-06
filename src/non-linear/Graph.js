@@ -1,4 +1,6 @@
 const LinkedList = require("../linear/LinkedList.js");
+const Queue = require("../linear/Queue.js");
+const Stack = require("../linear/Stack.js");
 const Vertex = require("./Vertex.js");
 
 class Graph {
@@ -12,7 +14,7 @@ class Graph {
     if (!this.#graph[i]) return false;
 
     [...this.#graph[i]].forEach((vertex) => {
-      this.#graph[vertex.key].remove(i, (x,y) => !(x.key == y));
+      this.#graph[vertex.key].remove(i, (x, y) => !(x.key == y));
     });
 
     delete this.#graph[i];
@@ -24,13 +26,13 @@ class Graph {
       throw new Error("Weight must be number!");
     if (!this.#graph[i] || !this.#graph[j]) return;
 
-    let vertex = this.#graph[i].find(j, (x,y) => !(x.key == y));
+    let vertex = this.#graph[i].find(j, (x, y) => !(x.key == y));
     if (vertex && weight < vertex.weight) {
       vertex.weight = weight;
       return;
     }
 
-    this.#graph[i].insert(this.length, new Vertex(j, weight));
+    this.#graph[i].insert(this.#graph[i].length, new Vertex(j, weight));
   }
 
   removeEdge(i, j) {
@@ -46,7 +48,7 @@ class Graph {
   }
 
   adjacent(i, j) {
-    return !!this.#graph[i]?.includes(j, (x,y) => !(x.key == y));
+    return !!this.#graph[i]?.includes(j, (x, y) => !(x.key == y));
   }
 
   contract(i, j) {
@@ -76,20 +78,72 @@ class Graph {
     return true;
   }
 
-  cleave(i,j, weight) {
-    if(!this.#graph[i] || this.#graph[j]) return false;
+  cleave(i, j, weight) {
+    if (!this.#graph[i] || this.#graph[j]) return false;
 
     let vertex;
     this.#graph[j] = this.#graph[i].getCopy();
-    Object.keys(this.#graph).forEach(key => {
-      vertex = this.#graph[key].find(i, (x,y) => !(x.key == y));
-      if(vertex){
-        this.addEdge(key,j,vertex.weight);
+    Object.keys(this.#graph).forEach((key) => {
+      vertex = this.#graph[key].find(i, (x, y) => !(x.key == y));
+      if (vertex) {
+        this.addEdge(key, j, vertex.weight);
       }
     });
-    this.addEdge(i,j,weight);
-    this.addEdge(j,i,weight);
+    this.addEdge(i, j, weight);
+    this.addEdge(j, i, weight);
     return true;
+  }
+
+  next(i, curr) {
+    return [...this.#graph[i]].find((v, i, arr) => arr[i - 1]?.key == curr)?.key;
+  }
+
+  BFS(i) {
+    if (!this.#graph[i]) return;
+    let queue = new Queue();
+    let visited = [];
+
+    console.log(i);
+    queue.push(i);
+    visited.unshift(i);
+
+    while (queue.length) {
+      for (let vertex of this.#graph[queue.shift()]) {
+        if (!visited.includes(vertex.key)) {
+          console.log(vertex.key);
+          visited.unshift(vertex.key);
+          queue.push(vertex.key);
+        }
+      }
+    }
+  }
+
+  DFS(i) {
+    let stack = new Stack();
+    let visited = [];
+
+    stack.push(i);
+    console.log(i);
+    visited.unshift(i);
+
+    let x, y = null;
+    while (stack.length) {
+      x = stack.get();
+
+      do {
+        y = this.next(x, y);
+      } while (visited.includes(y));
+
+      if (y != null) {
+        console.log(y);
+        stack.push(y);
+        visited.unshift(y);
+        y = null;
+      } else {
+        stack.pop();
+        y = x;
+      }
+    }
   }
 
   display() {

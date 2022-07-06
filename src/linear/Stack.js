@@ -16,6 +16,11 @@ class Stack{
         this.#list.insert(this.length,data);
     }
 
+    get(){
+        if(!this.length) return;
+        return this.#list.atPos(this.length-1);
+    }
+
     get length(){
         return this.#list.length;
     }
