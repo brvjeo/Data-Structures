@@ -98,58 +98,45 @@ class Graph {
     return [...this.#graph[i]].find((v, i, arr) => arr[i - 1]?.key == curr)?.key;
   }
 
-  BFS(i) {
-    if (!this.#graph[i]) return;
+  BFS(i){
     let queue = new Queue();
-    let visited = [];
-
-    console.log(i);
-    queue.push(i);
-    visited.unshift(i);
-
-    while (queue.length) {
-      for (let vertex of this.#graph[queue.shift()]) {
-        if (!visited.includes(vertex.key)) {
-          console.log(vertex.key);
-          visited.unshift(vertex.key);
-          queue.push(vertex.key);
-        }
-      }
-    }
+    this.#traverse(i,queue,queue.enqueue.bind(queue),queue.dequeue.bind(queue),queue.peek.bind(queue));
   }
 
-  DFS(i) {
+  DFS(i){
     let stack = new Stack();
+    this.#traverse(i,stack,stack.push.bind(stack),stack.pop.bind(stack),stack.peek.bind(stack));
+  }
+  
+  #traverse(i ,struct, insert, pull, peek){
     let visited = [];
-
-    stack.push(i);
+    let x,y = null;
+    
     console.log(i);
     visited.unshift(i);
+    insert(i);
+    while(!struct.isEmpty()){
+      x = peek();
+      do{
+        y = this.next(x,y);
+      }while(visited.includes(y));
 
-    let x, y = null;
-    while (stack.length) {
-      x = stack.get();
-
-      do {
-        y = this.next(x, y);
-      } while (visited.includes(y));
-
-      if (y != null) {
+      if(y != undefined){
         console.log(y);
-        stack.push(y);
+        insert(y);
         visited.unshift(y);
-        y = null;
-      } else {
-        stack.pop();
-        y = x;
+        if(struct instanceof Stack){
+          y = null;
+        }
+      }else{
+        if(struct instanceof Queue){
+          y = null;
+        }else{
+          y = x;
+        }
+        pull();
       }
     }
-  }
-
-  display() {
-    Object.entries(this.#graph).forEach((pair) =>
-      console.log(`${pair[0]} : ${[...pair[1]]}`)
-    );
   }
 }
 

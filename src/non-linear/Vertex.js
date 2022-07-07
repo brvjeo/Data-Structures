@@ -1,6 +1,6 @@
 class Vertex {
   constructor(key, weight) {
-    if (key == null) {
+    if (key == undefined) {
       throw new Error("Undefined data!");
     }
     this.key = key;
@@ -20,7 +20,7 @@ class Vertex {
   }
 
   toString() {
-    return `{${this.key} | ${this.weight}}`;
+    return `${this.key}/${this.weight} `;
   }
 }
 
