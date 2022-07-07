@@ -7,22 +7,22 @@ class Queue {
     return this.#list[Symbol.iterator]();
   }
 
-  push(data) {
+  enqueue(data) {
     this.#list.insert(this.length, data);
   }
 
-  shift() {
-    if (!this.length) return;
+  dequeue() {
+    if(this.isEmpty()) return;
     return this.#list.pull(0);
   }
 
-  includes(data, compare){
-    return this.#list.includes(data,compare);
+  peek(){
+    if(this.isEmpty()) return;
+    return this.#list.get(0);
   }
 
-  get(){
-    if(!this.length) return;
-    return this.#list.atPos(0);
+  isEmpty(){
+    return this.#list.isEmpty();
   }
 
   get length() {

@@ -102,6 +102,10 @@ class LinkedList {
     return list;
   }
 
+  isEmpty(){
+    return !this.#head;
+  }
+
   #getNode(index) {
     if (index < 0 || index >= this.#length) return;
 
@@ -151,3 +155,5 @@ function defaultCompare(x, y) {
     return 1;
   }
 }
+
+const list = new LinkedList();

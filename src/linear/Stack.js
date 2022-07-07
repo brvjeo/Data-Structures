@@ -8,7 +8,7 @@ class Stack{
     }
 
     pop(){
-        if(!this.length) return;
+        if(this.isEmpty()) return;
         return this.#list.pull(this.length-1);
     }
 
@@ -16,9 +16,13 @@ class Stack{
         this.#list.insert(this.length,data);
     }
 
-    get(){
-        if(!this.length) return;
-        return this.#list.atPos(this.length-1);
+    peek(){
+        if(this.isEmpty()) return;
+        return this.#list.get(this.length-1);
+    }
+
+    isEmpty(){
+        return this.#list.isEmpty();
     }
 
     get length(){
@@ -27,4 +31,3 @@ class Stack{
 }
 
 module.exports = Stack;
-

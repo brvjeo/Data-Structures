@@ -8,7 +8,7 @@ class Deque {
   }
 
   pop() {
-    if (!this.length) return;
+    if (this.isEmpty()) return;
     return this.#list.pull(this.length - 1);
   }
 
@@ -21,18 +21,22 @@ class Deque {
   }
 
   shift() {
-    if (!this.length) return;
+    if (this.isEmpty()) return;
     return this.#list.pull(0);
   }
 
-  getFirst(){
-    if(!this.length) return;
-    return this.#list.atPos(0);
+  get first(){
+    if(this.isEmpty()) return;
+    return this.#list.get(0);
   }
 
-  getLast(){
-    if(!this.length) return;
-    return this.#list.atPos(this.length - 1);
+  get last(){
+    if(this.isEmpty()) return;
+    return this.#list.get(this.length - 1);
+  }
+
+  isEmpty(){
+    return this.#list.isEmpty();
   }
 
   get length() {
