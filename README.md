@@ -11,7 +11,7 @@
     │   ├── Queue.js
     │   └── Stack.js
     └── non-linear
-        ├── BinaryMaxHeap.js
+        ├── BinaryHeap.js
         ├── BinarySearchTree.js
         ├── BinaryTree.js
         ├── Graph.js

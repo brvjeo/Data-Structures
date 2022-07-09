@@ -1,7 +1,5 @@
 const BinaryMaxHeap = require('./BinaryMaxHeap.js');
 
-Array.prototype.entries
-Math.sqrt()
 class BinaryHeap {
     #array = new Array(1);
     /**
