@@ -11,8 +11,8 @@
  * - Maximum
  */
 
-const Node = require("./Node.js");
-const BinaryTree = require("./BinaryTree.js");
+const Node = require('./Node.js');
+const BinaryTree = require('./BinaryTree.js');
 
 class BinarySearchTree {
   #root = null;
@@ -45,17 +45,17 @@ class BinarySearchTree {
   }
 
   preOrderPrint() {
-    if (!this.#root) console.log("Tree is empty!");
+    if (!this.#root) console.log('Tree is empty!');
     BinaryTree.preOrderPrint(this.#root);
   }
 
   inOrderPrint() {
-    if (!this.#root) console.log("Tree is empty!");
+    if (!this.#root) console.log('Tree is empty!');
     BinaryTree.inOrderPrint(this.#root);
   }
 
   postOrderPrint() {
-    if (!this.#root) console.log("Tree is empty!");
+    if (!this.#root) console.log('Tree is empty!');
     BinaryTree.postOrderPrint(this.#root);
   }
 

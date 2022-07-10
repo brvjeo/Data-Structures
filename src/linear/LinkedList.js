@@ -1,4 +1,4 @@
-const Node = require("./Node.js");
+const Node = require('./Node.js');
 
 class LinkedList {
   #head = null;

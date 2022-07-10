@@ -1,7 +1,7 @@
 class BinaryTree {
 
     constructor(){
-        throw new Error("Static class!");
+        throw new Error('Static class!');
     }
 
     static inOrderPrint(node){

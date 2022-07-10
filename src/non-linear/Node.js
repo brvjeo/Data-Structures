@@ -1,7 +1,7 @@
 class Node {
     constructor(data){
         if(data == null){
-            throw new Error("Undefined data!");
+            throw new Error('Undefined data!');
         }
         this.data = data;
         this.left = null;

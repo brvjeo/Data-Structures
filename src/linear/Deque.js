@@ -1,4 +1,4 @@
-const LinkedList = require("./LinkedList.js");
+const LinkedList = require('./LinkedList.js');
 
 class Deque {
   #list = new LinkedList();

@@ -1,7 +1,6 @@
-const BinaryMaxHeap = require('./BinaryMaxHeap.js');
-
 class BinaryHeap {
     #array = new Array(1);
+    #compare;
     /**
      * Constructor takes one argument to set comparison function.
      * Set ```BinaryHeap.maxheap```, if you want to build max-heap, otherwise choose```Binary.minheap```.
@@ -9,10 +8,10 @@ class BinaryHeap {
      */
     constructor(compare = BinaryHeap.maxheap) {
         if (compare == undefined) {
-            throw new Error("Undefined compare function!");
+            throw new Error('Undefined compare function!');
         }
 
-        this.compare = compare;
+        this.#compare = compare;
     }
     /**
      * Returns > 0, if first number bigger than second.
@@ -54,6 +53,15 @@ class BinaryHeap {
         return this.#pull(this.#array);
     }
 
+    peek(){
+        if(!this.#array.length) return;
+        return this.#array[1];
+    }
+
+    isEmpty(){
+        return this.#array.length == 1;
+    }
+
     #pull(array) {
         if (array.length == 1) return;
         if (array.length == 2) return array.pop();
@@ -70,7 +78,7 @@ class BinaryHeap {
         if ((index > array.length - 1) || (index * 2 > array.length - 1)) return;
 
         let child = this.#getPriorChildIndex(index, array);
-        if (this.compare(array[index], array[child]) < 0) {
+        if (this.#compare(array[index], array[child]) < 0) {
             this.#swap(index, child, array);
             this.#seed(child, array);
         }
@@ -79,7 +87,7 @@ class BinaryHeap {
     #restoreHeap(index, array) {
         if (!Math.floor(index) || !Math.floor(index / 2)) return;
 
-        if (this.compare(array[index], array[Math.floor(index / 2)]) >= 0) {
+        if (this.#compare(array[index], array[Math.floor(index / 2)]) >= 0) {
             this.#swap(index, Math.floor(index / 2), array);
             this.#restoreHeap(Math.floor(index / 2), array);
         }
@@ -93,7 +101,7 @@ class BinaryHeap {
 
     #getPriorChildIndex(index, array) {
         if (array[index * 2 + 1] == undefined) return index * 2;
-        if (this.compare(array[index * 2], array[index * 2 + 1]) > 0) {
+        if (this.#compare(array[index * 2], array[index * 2 + 1]) > 0) {
             return index * 2;
         } else {
             return index * 2 + 1;
