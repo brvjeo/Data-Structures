@@ -155,5 +155,3 @@ function defaultCompare(x, y) {
     return 1;
   }
 }
-
-const list = new LinkedList();

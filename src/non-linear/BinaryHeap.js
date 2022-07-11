@@ -10,7 +10,6 @@ class BinaryHeap {
         if (compare == undefined) {
             throw new Error('Undefined compare function!');
         }
-
         this.#compare = compare;
     }
     /**
