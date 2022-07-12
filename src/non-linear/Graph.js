@@ -12,19 +12,17 @@ class Graph {
   }
 
   removeVertex(i) {
-    if (!this.#graph[i]) return false;
+    if (!this.#graph[i]) return;
 
     [...this.#graph[i]].forEach((vertex) => {
       this.#graph[vertex.key].remove(i, (x, y) => !(x.key == y));
     });
 
     delete this.#graph[i];
-    return true;
   }
 
   addEdge(i, j, weight) {
-    if (weight == null || typeof weight != typeof 1)
-      throw new Error('Weight must be number!');
+    if (weight == null || typeof weight != typeof 1) throw new Error('Weight must be number!');
     if (!this.#graph[i] || !this.#graph[j]) return;
 
     let vertex = this.#graph[i].find(j, (x, y) => !(x.key == y));
@@ -37,15 +35,7 @@ class Graph {
   }
 
   removeEdge(i, j) {
-    let flag = false;
-    this.#graph[i]?.remove(j, (x, y) => {
-      if (x.key == y) {
-        flag = true;
-        return 0;
-      }
-      return 1;
-    });
-    return flag;
+    this.#graph[i]?.remove(j, (x, y) => !(x.key == y));
   }
 
   adjacent(i, j) {
@@ -53,7 +43,7 @@ class Graph {
   }
 
   contract(i, j) {
-    if (!this.#graph[i] || !this.#graph[j]) return false;
+    if (!this.#graph[i] || !this.#graph[j]) return;
 
     this.removeEdge(i, j);
     this.removeEdge(j, i);
@@ -64,23 +54,20 @@ class Graph {
 
     delete this.#graph[j];
 
-    let list, weight;
+    let list;
     Object.keys(this.#graph).forEach((key) => {
       list = this.#graph[key];
       [...list].forEach((vertex, index) => {
         if (vertex.key == j) {
-          weight = vertex.weight;
           list.pull(index);
-          this.addEdge(key, i, weight);
+          this.addEdge(key, i, vertex.weight);
         }
       });
     });
-
-    return true;
   }
 
   cleave(i, j, weight) {
-    if (!this.#graph[i] || this.#graph[j]) return false;
+    if (!this.#graph[i] || this.#graph[j]) return;
 
     let vertex;
     this.#graph[j] = this.#graph[i].getCopy();
@@ -92,7 +79,6 @@ class Graph {
     });
     this.addEdge(i, j, weight);
     this.addEdge(j, i, weight);
-    return true;
   }
 
   getEdgeValue(i, j) {
